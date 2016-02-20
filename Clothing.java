@@ -3,19 +3,9 @@ package assignment3;
 public class Clothing extends Item 
 {
 
-	// variables, constructors as necessary
-	
-	float calculatePrice () 
-	{
-		float final_price = 0;
-		// Insert price calculation here
-		return final_price;
+	// Nothing new beyond regular item attributes.
+	public Clothing(String itemName, float itemCost, int itemQuantity, int itemWeight){
+		super(itemName, itemCost, itemQuantity, itemWeight);
 	}
 	
-	void printItemAttributes () 
-	{
-		//Print all applicable attributes of this sub-class
-	}
-	
-
 }
