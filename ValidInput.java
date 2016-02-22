@@ -1,8 +1,11 @@
 package assignment3;
 
 public class ValidInput{
-
-	public static boolean isValidOp (String input){
+	//Dan Added this because
+	public String[] inputArgs;
+	
+	//Below is currently Stefan's Additions
+	public  boolean isValidOp (String input){
 		if(input.equalsIgnoreCase("insert") || input.equalsIgnoreCase("delete") ||
 				input.equalsIgnoreCase("search") || input.equalsIgnoreCase("search") ||
 				input.equalsIgnoreCase("update") || input.equalsIgnoreCase("print")){
@@ -12,7 +15,7 @@ public class ValidInput{
 		}
 	}
 	
-	public static boolean isValidCat (String input){
+	public  boolean isValidCat (String input){
 		if(input.equalsIgnoreCase("clothing") || input.equalsIgnoreCase("electronics") ||
 				input.equalsIgnoreCase("groceries")){
 			return true;
@@ -21,7 +24,7 @@ public class ValidInput{
 		}
 	}
 	
-	public static boolean isValidPrice (String input){
+	public  boolean isValidPrice (String input){
 		int i = 0;
 		String character = input.substring(i, i + 1);
 		int punct = 0; // Count for number of occurrences of periods.
@@ -50,7 +53,7 @@ public class ValidInput{
 		}
 	}
 	
-	public static boolean isValidWholeNum (String input){
+	public  boolean isValidWholeNum (String input){
 		int i = 0;
 		String character = input.substring(i, i + 1);
 		int punct = 0; // Count for number of occurrences of periods.
@@ -72,7 +75,7 @@ public class ValidInput{
 		return false; // If i != input.length(), there is at least one invalid character.
 	}
 	
-	public static boolean isValidInt (String input){
+	public  boolean isValidInt (String input){
 		int i = 0;
 		String character = input.substring(i, i + 1);
 		// Check each character in a string to see if they are integers.
@@ -87,7 +90,7 @@ public class ValidInput{
 		}
 	}
 	
-	public static boolean isValidOp1 (String input, String category){
+	public  boolean isValidOp1 (String input, String category){
 		if(input.equalsIgnoreCase("groceries")){
 			if(input.equalsIgnoreCase("P") || input.equalsIgnoreCase("NP")){
 				return true;
@@ -105,7 +108,7 @@ public class ValidInput{
 		}
 	}
 	
-	public static boolean isValidOp2 (String input, String category){
+	public  boolean isValidOp2 (String input, String category){
 		if(input.equalsIgnoreCase("electronics")){
 			if(isState(input)){
 				return true;
@@ -117,13 +120,13 @@ public class ValidInput{
 		}
 	}
 	
-	public static String[] states = {"AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL",
+	public  String[] states = {"AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL",
 			"GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", 
 			"MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR",
 			"PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"
 	};
 	
-	public static boolean isState (String input){
+	public  boolean isState (String input){
 		boolean matchFound = false;
 		int i = 0;
 		// Check if input is one of 51 possible US state abbreviations (includes Washington DC).

@@ -1,4 +1,25 @@
 package assignment3;
+/*************************************************************************************************
+IMPORTANT!^
+IMPORTANT!^
+IMPORTANT!^
+IMPORTANT!^
+IMPORTANT!^
+IMPORTANT!^
+IMPORTANT!^
+IMPORTANT!^
+IMPORTANT!^
+Don't forget to change package to Assignment3 or points will be deducted, would change it now but it can wait 
+*/
+
+
+
+
+
+
+
+
+
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -6,7 +27,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
-import assignment3.ValidInput;
+
 
 public class ShoppingCartDriver 
 	{
@@ -16,7 +37,7 @@ public class ShoppingCartDriver
 		// TODO Auto-generated method stub
 		
 		  
-		/**
+		/*
 		 * I (Stefan) added this stretch of code. The rest came in the default package.
 		 * The current design plan is to use processLinesInFile to comb through the input
 		 * data and remove lines with improper input arguments. The String array named
@@ -57,7 +78,7 @@ public class ShoppingCartDriver
 		}		
 	  }
 	  
-	  // I (Stefan) added everything below this line.
+	  // I (Stefan) added everything below this line.((Edit)-Dan Coded the meat of the function reviewTransaction)
 		/******************************************************************************
 		* Method Name: processLinesInFile                                             *
 		* Purpose: Opens the file specified in String filename, reads each line in it *
@@ -66,13 +87,15 @@ public class ShoppingCartDriver
 		* Returns: None                                                               *
 		******************************************************************************/
 		public static String[] processLinesInFile (String filename) 
-		{ 
+		{ 	
+			String[] transactions={};
+		
 			try 
 			{
 				FileReader freader = new FileReader(filename);
 				BufferedReader reader = new BufferedReader(freader);
 				
-				String[] transactions;
+				
 				int i = 0; // Transaction string index.
 				for (String s = reader.readLine(); s != null; s = reader.readLine()) 
 				{
@@ -95,6 +118,7 @@ public class ShoppingCartDriver
 				e.printStackTrace();
 				System.exit(-1);
 			}
+			return transactions;//Added this
 		}
 		
 		/******************************************************************************
@@ -104,24 +128,77 @@ public class ShoppingCartDriver
 		*         								                                      *
 		* Returns: None                                                               *
 		******************************************************************************/
+		//Dan's Code is here 
 		public static boolean reviewTransaction (String transaction){
-			 String inputArgs[] = transaction.split("\\s+"); // Parses transaction.
+			 ValidInput letsParse=new ValidInput();
+			 letsParse.inputArgs = transaction.split("\\s+"); // Parses transaction.
 			 
-			 // Check for valid operation.
-
+			 //Check for valid operation
+			  
+			 
+			 //firstly, our inputs should have a minimum of 6 inputs, and could have up to 8 
+			 if(letsParse.inputArgs.length<6||letsParse.inputArgs.length>8)	
+			 {
+				 System.out.println("Invalid Input Length");
+				 return false;
+			 }		
+			 //Added a try/catch just to ensure there are no reads that should not be implemented
+			 try
+			 {
+				 
+				 if(!letsParse.isValidOp(letsParse.inputArgs[0]))
+				 {
+					 System.out.println("Sorry, that is not a valid operation. Try again");
+					 return false;
+				 
+				 }
+				 
 			 // Check for valid category.
+				 else if(!letsParse.isValidCat(letsParse.inputArgs[1]))
+				 { 
+					 System.out.println("Sorry, that is not a valid category. Try again");
+					 return false;
+				 }
+				// Assume all names are valid.
+				// Check for valid price. Can price = 0?----------------------Assumption is yes for now. 
+				 else if(!letsParse.isValidPrice(letsParse.inputArgs[3])){
+					 System.out.println("Sorry, that is not a valid price input");
+					 return false;
+				 }
+				 // Check for valid Quantity. Can quantity = 0? =========Again assumption will be yes for now.
+				 else if(!letsParse.isValidInt(letsParse.inputArgs[4]))
+				 {
+					 System.out.println("Sorry, that is not a valid Quantity, isValidInt Error. Try again");
+					 return false;
+				 } 
+			
+				 //Checking for valid weight
+				 else if(!letsParse.isValidInt(letsParse.inputArgs[5])){
+					 System.out.println("Sorry, that is not a valid weight. Try again");
+					 return false;
+				 }
+				 /*Checking for Op1 Validity, inputs to the checker function in ValidInput are
+				  * (input,category), both of type String where input refers to the op1 field (inputArgs[6]) 
+				  * and category refers to inputArgs[1]
+				  */
+				 
+				 else if(!letsParse.isValidOp1(letsParse.inputArgs[6], letsParse.inputArgs[1])){
+					 
+
+				 }else if(!letsParse.isValidOp1(letsParse.inputArgs[7], letsParse.inputArgs[1]))
+			 }
+			 catch (Exception e)
+			 {
+				 System.out.println("You have an invalidity in input somewhere causing an index to be read that is out of bounds");
+				 return false;
+				 
+			 }
 			 
-			 // Assume all names are valid.
+			
 			 
-			 // Check for valid price. Can price = 0?
-			 
-			 // Check for valid Quantity. Can quantity = 0?
-			 
-			 // Check for valid weight. Can weight = 0?
-			 
-			 // Check for valid optional input 1.
 			 
 			 // Check for valid optional input 2.
+			 return true;
 		}
 		
 }
