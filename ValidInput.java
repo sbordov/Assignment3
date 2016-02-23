@@ -5,13 +5,151 @@ public class ValidInput{
 	public String[] inputArgs;
 	
 	//Below is currently Stefan's Additions
+	public boolean checkInsert (String[] input){
+		String catCheck = categoryCheck(input[1]); 
+		boolean result = false;
+		switch (catCheck){
+			case "clothing":
+				result = checkClothingInput(input);
+				break;
+			case "groceries":
+				result = checkGroceriesInput(input);
+				break;
+			case "electronics":
+				result = checkElectronicsInput(input);
+				break;
+			default:
+				result = false;
+		}
+		return result;
+	}
+	
+	public boolean checkDelete (String[] input){
+		if(input.length == 2){
+			return true;
+		} else{
+			System.out.println("Inappropriate arguments for delete transaction.");
+			return false;
+		}
+	}
+	
+	public boolean checkSearch (String[] input){
+		if(input.length == 2){
+			return true;
+		} else{
+			System.out.println("Inappropriate arguments for search transaction.");
+			return false;
+		}
+	}
+	
+	public boolean checkUpdate (String[] input){
+		if((input.length == 3) && isValidInt(input[2])){
+			return true;
+		} else{
+			System.out.println("Innapropriate arguments for update transaction.");
+			return false;
+		}
+			
+	}
+	
+	public boolean checkPrint (String[] input){
+		if(input.length == 1){
+			return true;
+		} else{
+			System.out.println("Inappropriate number of arguments for print command.");
+			return false;
+		}
+	}
+	
+	public boolean checkClothingInput (String[] input){
+		String price = input[3]; String quantity = input[4]; String weight = input[5];
+		
+		if(input.length == 6){
+			if(isValidPrice(price) && isValidInt(quantity) && isValidInt(weight)){
+				return true;
+			} else{
+				System.out.println("Inappropriate arguments for insert of category type Clothing.");
+				return false;
+			}
+		} else{
+			System.out.println("Inappropriate number of arguments for category type Clothing.");
+			return false;
+		}
+	}
+	
+	public boolean checkGroceriesInput (String[] input){
+		String category = input[1]; String price = input[3]; String quantity = input[4]; 
+		String weight = input[5]; String perishability = input[6];
+		
+		if(input.length == 7){
+			if(isValidPrice(price) && isValidInt(quantity) && isValidInt(weight) &&
+					isValidOp1(perishability, category)){
+				return true;
+			} else{
+				System.out.println("Inappropriate arguments for insert of category type Groceries.");
+				return false;
+			}
+		} else{
+			System.out.println("Inappropriate number of arguments for category type Groceries.");
+			return false;
+		}
+	}
+	
+	public boolean checkElectronicsInput (String[] input){
+		String category = input[1]; String price = input[3]; String quantity = input[4]; 
+		String weight = input[5]; String fragility = input[6]; String state = input[7];
+		
+		if(input.length == 8){
+			if(isValidPrice(price) && isValidInt(quantity) && isValidInt(weight) &&
+					isValidOp1(fragility, category) && isValidOp2(state, category)){
+				return true;
+			} else{
+				System.out.println("Inappropriate arguments for insert of category type Electronics.");
+				return false;
+			}
+		} else{
+			System.out.println("Inappropriate number of arguments for category type Electronics.");
+			return false;
+		}
+	}
+	
 	public  boolean isValidOp (String input){
 		if(input.equalsIgnoreCase("insert") || input.equalsIgnoreCase("delete") ||
-				input.equalsIgnoreCase("search") || input.equalsIgnoreCase("search") ||
-				input.equalsIgnoreCase("update") || input.equalsIgnoreCase("print")){
+				input.equalsIgnoreCase("search") || input.equalsIgnoreCase("update") ||
+				input.equalsIgnoreCase("print")){
 			return true;
 		} else{ 
 			return false;
+		}
+	}
+	
+	public String operationCheck (String input){
+		if(input.equalsIgnoreCase("insert")){ 
+			return "insert";
+		} else if(input.equalsIgnoreCase("delete")){
+			return "delete";
+		} else if(input.equalsIgnoreCase("search")){
+			return "search";
+		} else if(input.equalsIgnoreCase("update")){
+			return "update";
+		} else if(input.equalsIgnoreCase("print")){
+			return "print";
+		} else{
+			System.out.println("Error in checking operation.");
+			return "";
+		}
+	}
+	
+	public String categoryCheck (String input){
+		if(input.equalsIgnoreCase("clothing")){
+			return "clothing";
+		} else if(input.equalsIgnoreCase("groceries")){
+			return "groceries";
+		} else if(input.equalsIgnoreCase("electronics")){
+			return "electronics";
+		} else{
+			System.out.println("Erroneous category input.");
+			return "";
 		}
 	}
 	

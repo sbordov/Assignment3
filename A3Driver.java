@@ -130,14 +130,41 @@ public class ShoppingCartDriver
 		******************************************************************************/
 		//Dan's Code is here 
 		public static boolean reviewTransaction (String transaction){
-			 ValidInput letsParse=new ValidInput();
-			 letsParse.inputArgs = transaction.split("\\s+"); // Parses transaction.
+			 ValidInput parsedArgs = new ValidInput();
+			 parsedArgs.inputArgs = transaction.split("\\s+"); // Parses transaction.
 			 
 			 //Check for valid operation
+			 String operation = parsedArgs.inputArgs[0];
+			 if(!parsedArgs.isValidOp(operation)){
+				 System.out.println("Invalid operation.");
+				 return false;
+			 } else{ // Figure out which operation we're dealing with.
+				 String opCheck = parsedArgs.operationCheck(operation);
+				 switch (opCheck){
+				 	case "insert": // insert
+				 		return parsedArgs.checkInsert(parsedArgs.inputArgs);
+				 		break;
+				 	case "delete": // delete
+				 		return parsedArgs.checkDelete(parsedArgs.inputArgs);
+				 		break;
+				 	case "search": // search
+				 		return parsedArgs.checkSearch(parsedArgs.inputArgs);
+				 		break;
+				 	case "update": // update
+				 		return parsedArgs.checkUpdate(parsedArgs.inputArgs);
+				 		break;
+				 	case "print": // print
+				 		return parsedArgs.checkPrint(parsedArgs.inputArgs);
+				 		break;
+				 	default: System.out.println("Invalid operation");
+				 }
+			 }
+		}
+	}
 			  
-			 
+			 /*
 			 //firstly, our inputs should have a minimum of 6 inputs, and could have up to 8 
-			 if(letsParse.inputArgs.length<6||letsParse.inputArgs.length>8)	
+			 if(parsedArgs.inputArgs.length < 6||parsedArgs.inputArgs.length > 8)	
 			 {
 				 System.out.println("Invalid Input Length");
 				 return false;
@@ -146,7 +173,7 @@ public class ShoppingCartDriver
 			 try
 			 {
 				 
-				 if(!letsParse.isValidOp(letsParse.inputArgs[0]))
+				 if(!parsedArgs.isValidOp(parsedArgs.inputArgs[0]))
 				 {
 					 System.out.println("Sorry, that is not a valid operation. Try again");
 					 return false;
@@ -154,38 +181,37 @@ public class ShoppingCartDriver
 				 }
 				 
 			 // Check for valid category.
-				 else if(!letsParse.isValidCat(letsParse.inputArgs[1]))
+				 else if(!parsedArgs.isValidCat(parsedArgs.inputArgs[1]))
 				 { 
 					 System.out.println("Sorry, that is not a valid category. Try again");
 					 return false;
 				 }
 				// Assume all names are valid.
 				// Check for valid price. Can price = 0?----------------------Assumption is yes for now. 
-				 else if(!letsParse.isValidPrice(letsParse.inputArgs[3])){
+				 else if(!parsedArgs.isValidPrice(parsedArgs.inputArgs[3])){
 					 System.out.println("Sorry, that is not a valid price input");
 					 return false;
 				 }
 				 // Check for valid Quantity. Can quantity = 0? =========Again assumption will be yes for now.
-				 else if(!letsParse.isValidInt(letsParse.inputArgs[4]))
+				 else if(!parsedArgs.isValidInt(parsedArgs.inputArgs[4]))
 				 {
-					 System.out.println("Sorry, that is not a valid Quantity, isValidInt Error. Try again");
+					 System.out.println("Sorry, that is not a valid quantity, isValidInt Error. Try again");
 					 return false;
 				 } 
 			
 				 //Checking for valid weight
-				 else if(!letsParse.isValidInt(letsParse.inputArgs[5])){
+				 else if(!parsedArgs.isValidInt(parsedArgs.inputArgs[5])){
 					 System.out.println("Sorry, that is not a valid weight. Try again");
 					 return false;
 				 }
-				 /*Checking for Op1 Validity, inputs to the checker function in ValidInput are
+				 //Checking for Op1 Validity, inputs to the checker function in ValidInput are
 				  * (input,category), both of type String where input refers to the op1 field (inputArgs[6]) 
 				  * and category refers to inputArgs[1]
-				  */
-				 
-				 else if(!letsParse.isValidOp1(letsParse.inputArgs[6], letsParse.inputArgs[1])){
+				  //
+				 else if(!parsedArgs.isValidOp1(parsedArgs.inputArgs[6], parsedArgs.inputArgs[1])){
 					 
 
-				 }else if(!letsParse.isValidOp1(letsParse.inputArgs[7], letsParse.inputArgs[1]))
+				 }else if(!parsedArgs.isValidOp1(parsedArgs.inputArgs[7], parsedArgs.inputArgs[1]))
 			 }
 			 catch (Exception e)
 			 {
@@ -193,12 +219,6 @@ public class ShoppingCartDriver
 				 return false;
 				 
 			 }
-			 
-			
-			 
-			 
-			 // Check for valid optional input 2.
-			 return true;
-		}
+			 */
 		
-}
+
