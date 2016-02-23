@@ -1,8 +1,8 @@
 package assignment3;
 
-import java.util.Comparator;
+import java.util.*;
 
-public class Item //implements Comparable<Item>
+public class Item implements Comparable<Item>, Comparator<Item>
 {
 //Declare variables for this class. Think about its type: public, protected or private?
 	public String name;
@@ -55,11 +55,17 @@ public class Item //implements Comparable<Item>
 				"\tWeight: " + weight);
 	}
 	
-    Comparator<Item> = new Comparator<Item> {
-        public int compare(Item item1, Item item2) {
-          return item1.getName().compareTo(item2.getName());
-        }
+	@Override
+	public int compareTo(Item item){
+	    return name.compareTo(item.getName());
+	}
 	
+	@Override
+    public int compare(Item item1, Item item2) {
+          return item1.getName().compareTo(item2.getName());
+    }
+	
+        
 	public String getName (){
 		return this.name;
 	}

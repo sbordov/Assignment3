@@ -274,6 +274,6 @@ public class ValidInput{
 			}
 			i++;
 		}
-		return false;
+		return matchFound;
 	}
 }

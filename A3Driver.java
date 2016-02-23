@@ -30,7 +30,7 @@ import java.util.Comparator;
 
 
 
-public class ShoppingCartDriver 
+public class A3Driver
 	{
 
 	  public static void main(String[] args) 
@@ -139,19 +139,14 @@ public class ShoppingCartDriver
 				 switch (opCheck){
 				 	case "insert": // insert
 				 		return parsedArgs.checkInsert(parsedArgs.inputArgs);
-				 		break;
 				 	case "delete": // delete
 				 		return parsedArgs.checkDelete(parsedArgs.inputArgs);
-				 		break;
 				 	case "search": // search
 				 		return parsedArgs.checkSearch(parsedArgs.inputArgs);
-				 		break;
 				 	case "update": // update
 				 		return parsedArgs.checkUpdate(parsedArgs.inputArgs);
-				 		break;
 				 	case "print": // print
 				 		return parsedArgs.checkPrint(parsedArgs.inputArgs);
-				 		break;
 				 	default: System.out.println("Invalid operation");
 				 }
 			 }
@@ -200,12 +195,49 @@ public class ShoppingCartDriver
 		// Inserts items in alpha-numeric order.
 		public static void insert (String[] transaction, ArrayList<Item> shoppingCart){
 			String name = transaction[2];
-			//int index = Collections.binarySearch(shoppingCart, name);
+			float price = Float.parseFloat(transaction[3]);
+			int quantity = Integer.parseInt(transaction[4]);
+			int weight = Integer.parseInt(transaction[5]);
+			String op1; String op2;
+			Item item = new Item(name, price, quantity, weight);
+			ValidInput parsedArgs = new ValidInput();
+			parsedArgs.inputArgs = transaction;
+			String category = parsedArgs.categoryCheck(transaction[1]);
+			switch (category){
+				case "clothing": 
+					item = new Clothing(name, price, quantity, weight);
+					break;
+				case "groceries":
+					op1 = transaction[6];
+					item = new Grocery(name, price, quantity, weight, op1);
+					break;
+				case "electronics":
+					op1 = transaction[6];
+					op2 = transaction[7];
+					item = new Grocery(name, price, quantity, weight, op2);
+					break;
+				default: System.out.println("Error in insert.");
+			}
+			// Find index of location to insert new item that maintains alphabetical order.
+			int index = Collections.binarySearch(shoppingCart, item);
+			shoppingCart.add(index, item); // Add item to ArrayList.
 		}
 		
 		// Delete all entries of given name.
 		public static void delete (String[] transaction, ArrayList<Item> shoppingCart){
-			
+			/* Needs work.
+			String name = transaction[2];
+			Item temp = new Item(name, 0, 0, 0);
+			int quantity = 0;
+			ArrayList<Item> deletions = new ArrayList<Item>();
+			for(Item item : shoppingCart) // Checks for all occurrences of item of given name.
+				if(item.getName().equals(name)){
+					quantity += item.getQuantity(); // Add up quantity of items to be deleted.
+					int index = Collections.binarySearch(shoppingCart, temp);
+					deletions.add(shoppingCart.get(index)); // Record index of items for deletion.
+				}
+			*/
+				
 		}
 		
 		// Find number of entries of given name. Outputs number of items of name to screen.
