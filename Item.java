@@ -1,6 +1,8 @@
 package assignment3;
 
-public class Item 
+import java.util.Comparator;
+
+public class Item //implements Comparable<Item>
 {
 //Declare variables for this class. Think about its type: public, protected or private?
 	public String name;
@@ -52,5 +54,25 @@ public class Item
 		System.out.println("Name: " + name + "\tPrice: " + price + "\tQuantity: " + quantity +
 				"\tWeight: " + weight);
 	}
+	
+    Comparator<Item> = new Comparator<Item> {
+        public int compare(Item item1, Item item2) {
+          return item1.getName().compareTo(item2.getName());
+        }
+	
+	public String getName (){
+		return this.name;
+	}
+	
+	public float getPrice (){
+		return this.price;
+	}
 
+	public int getQuantity (){
+		return this.quantity;
+	}
+	
+	public int getWeight (){
+		return this.weight;
+	}
 }

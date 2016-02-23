@@ -26,6 +26,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
+import java.util.Comparator;
 
 
 
@@ -34,9 +35,7 @@ public class ShoppingCartDriver
 
 	  public static void main(String[] args) 
 	  {
-		// TODO Auto-generated method stub
-		
-		  
+ 
 		/*
 		 * I (Stefan) added this stretch of code. The rest came in the default package.
 		 * The current design plan is to use processLinesInFile to comb through the input
@@ -55,15 +54,12 @@ public class ShoppingCartDriver
 			System.exit(-1);
 		}
 		String[] transactions = processLinesInFile (args[0]);
-		/**
-		 * Everything after this in the main method was given to us. You might need to change it.
-		 */
-		  
 		  
 		//Parse input, take appropriate actions.
 			
 		//Stub for arraylist.
 		ArrayList<Item> shoppingCart = new ArrayList<Item>(); 
+		processTransactions(transactions, shoppingCart);
 		
 		// General code example for how to iterate an array list. You will have to modify this heavily, to suit your needs.
 		Iterator<Item> i = shoppingCart.iterator();
@@ -126,7 +122,7 @@ public class ShoppingCartDriver
 		* Purpose: Given a line of input, check if all text makes up a valid		  *
 		*          transaction.														  *
 		*         								                                      *
-		* Returns: None                                                               *
+		* Returns: boolean indicating validity of input input transaction.            *
 		******************************************************************************/
 		//Dan's Code is here 
 		public static boolean reviewTransaction (String transaction){
@@ -159,6 +155,73 @@ public class ShoppingCartDriver
 				 	default: System.out.println("Invalid operation");
 				 }
 			 }
+		}
+		
+		/******************************************************************************
+		* Method Name: processTransactions	                                          *
+		* Purpose: Given a String array of valid transactions, process transactions	  *
+		*          and fill shoppingCart with items as necessary.					  *
+		*         								                                      *
+		* Returns: None                                                               *
+		******************************************************************************/
+		//Dan's Code is here 
+		public static void processTransactions (String[] transaction, ArrayList<Item> shoppingCart){
+			if(transaction.length == 0){
+				System.out.println("No transactions to perform.");
+				return;
+			}
+			ValidInput parsedArgs = new ValidInput();
+			for(int i = 0; i < transaction.length; i++){
+				 parsedArgs.inputArgs = transaction[i].split("\\s+"); // Parses transaction.
+				 String operation = parsedArgs.inputArgs[0];
+				 String opCheck = parsedArgs.operationCheck(operation);
+				 switch (opCheck){
+				 	case "insert": // insert
+				 		insert(parsedArgs.inputArgs, shoppingCart);
+				 		break;
+				 	case "delete": // delete
+				 		delete(parsedArgs.inputArgs, shoppingCart);
+				 		break;
+				 	case "search": // search
+				 		search(parsedArgs.inputArgs, shoppingCart);
+				 		break;
+				 	case "update": // update
+				 		update(parsedArgs.inputArgs, shoppingCart);
+				 		break;
+				 	case "print": // print
+				 		print(parsedArgs.inputArgs, shoppingCart);
+				 		break;
+				 	default: System.out.println("Invalid operation");
+				 }
+			}
+			return;
+		}
+		
+		// Inserts items in alpha-numeric order.
+		public static void insert (String[] transaction, ArrayList<Item> shoppingCart){
+			String name = transaction[2];
+			//int index = Collections.binarySearch(shoppingCart, name);
+		}
+		
+		// Delete all entries of given name.
+		public static void delete (String[] transaction, ArrayList<Item> shoppingCart){
+			
+		}
+		
+		// Find number of entries of given name. Outputs number of items of name to screen.
+		public static void search (String[] transaction, ArrayList<Item> shoppingCart){
+			
+		}
+		
+		// Update the quantity of the first item of a given name appearing in shoppingCart.
+		// Prints the name and new quantity value to screen.
+		public static void update (String[] transaction, ArrayList<Item> shoppingCart){
+			
+		}
+		
+		// Print all contents of shoppingCart in alpha-numeric order.
+		public static void print (String[] transaction, ArrayList<Item> shoppingCart){
+			
 		}
 	}
 			  
