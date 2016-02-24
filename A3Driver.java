@@ -62,6 +62,7 @@ public class A3Driver
 		processTransactions(transactions, shoppingCart);
 		
 		// General code example for how to iterate an array list. You will have to modify this heavily, to suit your needs.
+		/* Useless starter code
 		Iterator<Item> i = shoppingCart.iterator();
 		while (i.hasNext()) 
 		{
@@ -72,6 +73,7 @@ public class A3Driver
 			//based on the inherited class type, as to which method is to be invoked. Eg: If it is an instance
 			// of Grocery, it will invoke the calculatePrice () method defined in Grocery.
 		}		
+		*/
 	  }
 	  
 	  // I (Stefan) added everything below this line.((Edit)-Dan Coded the meat of the function reviewTransaction)
@@ -84,7 +86,8 @@ public class A3Driver
 		******************************************************************************/
 		public static String[] processLinesInFile (String filename) 
 		{ 	
-			String[] transactions={};
+			ArrayList<String> transactions = new ArrayList<String>();
+			String[] goodTransactions = new String[]{};
 		
 			try 
 			{
@@ -97,11 +100,19 @@ public class A3Driver
 				{
 					boolean isValid = reviewTransaction(s); // Checks line of transaction for validity.
 					if(isValid){ // Adds a valid transaction to the transaction list to be performed.
-						transactions[i] = s; // Adds valid transaction line to return string.
+						transactions.add(s); // Adds valid transaction line to return string.
 						i++; // Increment transactions index.
 					}
 				}
-				return transactions;
+				goodTransactions = new String[i];
+				Iterator<String> it = transactions.iterator();
+				int index = 0;
+				while(it.hasNext()){
+					String temp = it.next();
+					goodTransactions[index] = temp;
+					index += 1;
+				}
+				return goodTransactions;
 			} 
 			catch (FileNotFoundException e) 
 			{
@@ -114,7 +125,7 @@ public class A3Driver
 				e.printStackTrace();
 				System.exit(-1);
 			}
-			return transactions;//Added this
+			return goodTransactions;//Added this
 		}
 		
 		/******************************************************************************
@@ -220,7 +231,7 @@ public class A3Driver
 				default: System.out.println("Error in insert.");
 			}
 			// Find index of location to insert new item that maintains alphabetical order.
-			int index = Collections.binarySearch(shoppingCart, item);
+			int index = binarySearch(shoppingCart, item);
 			shoppingCart.add(index, item); // Add item to ArrayList.
 		}
 		
@@ -232,7 +243,7 @@ public class A3Driver
 			while(i.hasNext()){ // Use iterator to go through shoppingCart.
 				Item temp = i.next(); // Check next item.
 				 // If the temp item name matches name, remove fr/ shoppingCart
-				if(temp.getName() == name){
+				if(temp.getName().equals(name)){
 					i.remove();
 					deletions += 1;
 				}
@@ -240,7 +251,7 @@ public class A3Driver
 			if(deletions == 0){
 				System.out.println("No items named " + name + " were found in the shopping cart.");
 			} else{
-				System.out.println("Deleted " + deletions + " occurences of items named " + name
+				System.out.println("Deleted " + deletions + " occurence(s) of items named " + name
 						+ " from the shopping cart.");
 			}
 				
@@ -254,7 +265,7 @@ public class A3Driver
 			while(i.hasNext()){ // Use iterator to go through shoppingCart.
 				Item temp = i.next(); // Check next item.
 				 // If the temp item name matches name, remove fr/ shoppingCart
-				if(temp.getName() == name){
+				if(temp.getName().equals(name)){
 					matches += 1;
 				}
 			}
@@ -262,7 +273,7 @@ public class A3Driver
 				System.out.println("No items named " + name + " were found in the shopping cart.");
 			} else{
 				System.out.println("Found " + matches + " occurences of items named " + name
-						+ " from the shopping cart.");
+						+ " in the shopping cart.");
 			}
 		}
 		
@@ -275,7 +286,7 @@ public class A3Driver
 			boolean match = false;
 			while(i.hasNext() && !match){
 				Item temp = i.next();
-				if(temp.getName() == name){
+				if(temp.getName().equals(name)){
 					temp.quantity = quantity;
 					match = true;
 				}
@@ -299,7 +310,26 @@ public class A3Driver
 				System.out.println("Name: " + temp.getName() + "\tQuantity: " + temp.getQuantity()
 					+ "\tPrice (plus tax, S&H): $" + price);
 			}
-			System.out.println("Total charge for shopping cart: $");
+			System.out.println("Total charge for shopping cart: $" + total);
+		}
+		
+		public static int binarySearch(ArrayList<Item> shoppingCart, Item item){
+			int low = 0;
+		    int high = shoppingCart.size() - 1;
+
+		    while (low <= high) {
+		        int mid = (low + high) / 2;
+		        Item midItem = shoppingCart.get(mid);
+		        int cmp = midItem.compareTo(item);
+
+		        if (cmp < 0)
+		            low = mid + 1;
+		        else if (cmp > 0)
+		            high = mid - 1;
+		        else
+		            return mid;
+		    }
+		    return low;
 		}
 	}
 			  

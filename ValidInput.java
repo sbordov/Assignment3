@@ -229,13 +229,13 @@ public class ValidInput{
 	}
 	
 	public  boolean isValidOp1 (String input, String category){
-		if(input.equalsIgnoreCase("groceries")){
+		if(category.equalsIgnoreCase("groceries")){
 			if(input.equalsIgnoreCase("P") || input.equalsIgnoreCase("NP")){
 				return true;
 			} else{
 				return false;
 			}
-		} else if(input.equalsIgnoreCase("electronics")){
+		} else if(category.equalsIgnoreCase("electronics")){
 			if(input.equalsIgnoreCase("F") || input.equalsIgnoreCase("NF")){
 				return true;
 			} else{
@@ -247,7 +247,7 @@ public class ValidInput{
 	}
 	
 	public  boolean isValidOp2 (String input, String category){
-		if(input.equalsIgnoreCase("electronics")){
+		if(category.equalsIgnoreCase("electronics")){
 			if(isState(input)){
 				return true;
 			} else{
@@ -268,7 +268,7 @@ public class ValidInput{
 		boolean matchFound = false;
 		int i = 0;
 		// Check if input is one of 51 possible US state abbreviations (includes Washington DC).
-		while((matchFound = false) && (i < states.length)){
+		while((matchFound == false) && (i < states.length)){
 			if(states[i].equalsIgnoreCase(input)){
 				matchFound = true;
 			}
