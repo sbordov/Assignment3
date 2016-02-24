@@ -62,6 +62,9 @@ public class ValidInput{
 	}
 	
 	public boolean checkClothingInput (String[] input){
+		if(input.length != 6){
+			return false;
+		}
 		String price = input[3]; String quantity = input[4]; String weight = input[5];
 		
 		if(input.length == 6){
@@ -78,6 +81,9 @@ public class ValidInput{
 	}
 	
 	public boolean checkGroceriesInput (String[] input){
+		if(input.length != 7 ){
+			return false;
+		}
 		String category = input[1]; String price = input[3]; String quantity = input[4]; 
 		String weight = input[5]; String perishability = input[6];
 		
@@ -96,6 +102,9 @@ public class ValidInput{
 	}
 	
 	public boolean checkElectronicsInput (String[] input){
+		if(input.length != 8){
+			return false;
+		}
 		String category = input[1]; String price = input[3]; String quantity = input[4]; 
 		String weight = input[5]; String fragility = input[6]; String state = input[7];
 		
