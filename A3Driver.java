@@ -148,6 +148,7 @@ public class A3Driver
 				 	case "print": // print
 				 		return parsedArgs.checkPrint(parsedArgs.inputArgs);
 				 	default: System.out.println("Invalid operation");
+				 		return false;
 				 }
 			 }
 		}
@@ -225,35 +226,80 @@ public class A3Driver
 		
 		// Delete all entries of given name.
 		public static void delete (String[] transaction, ArrayList<Item> shoppingCart){
-			/* Needs work.
-			String name = transaction[2];
-			Item temp = new Item(name, 0, 0, 0);
-			int quantity = 0;
-			ArrayList<Item> deletions = new ArrayList<Item>();
-			for(Item item : shoppingCart) // Checks for all occurrences of item of given name.
-				if(item.getName().equals(name)){
-					quantity += item.getQuantity(); // Add up quantity of items to be deleted.
-					int index = Collections.binarySearch(shoppingCart, temp);
-					deletions.add(shoppingCart.get(index)); // Record index of items for deletion.
+			String name = transaction[1];
+			int deletions = 0;
+			Iterator<Item> i = shoppingCart.iterator();
+			while(i.hasNext()){ // Use iterator to go through shoppingCart.
+				Item temp = i.next(); // Check next item.
+				 // If the temp item name matches name, remove fr/ shoppingCart
+				if(temp.getName() == name){
+					i.remove();
+					deletions += 1;
 				}
-			*/
+			}
+			if(deletions == 0){
+				System.out.println("No items named " + name + " were found in the shopping cart.");
+			} else{
+				System.out.println("Deleted " + deletions + " occurences of items named " + name
+						+ " from the shopping cart.");
+			}
 				
 		}
 		
 		// Find number of entries of given name. Outputs number of items of name to screen.
 		public static void search (String[] transaction, ArrayList<Item> shoppingCart){
-			
+			String name = transaction[1];
+			int matches = 0;
+			Iterator<Item> i = shoppingCart.iterator();
+			while(i.hasNext()){ // Use iterator to go through shoppingCart.
+				Item temp = i.next(); // Check next item.
+				 // If the temp item name matches name, remove fr/ shoppingCart
+				if(temp.getName() == name){
+					matches += 1;
+				}
+			}
+			if(matches == 0){
+				System.out.println("No items named " + name + " were found in the shopping cart.");
+			} else{
+				System.out.println("Found " + matches + " occurences of items named " + name
+						+ " from the shopping cart.");
+			}
 		}
 		
 		// Update the quantity of the first item of a given name appearing in shoppingCart.
 		// Prints the name and new quantity value to screen.
 		public static void update (String[] transaction, ArrayList<Item> shoppingCart){
-			
+			String name = transaction[1];
+			int quantity = Integer.parseInt(transaction[2]);
+			Iterator<Item> i = shoppingCart.iterator();
+			boolean match = false;
+			while(i.hasNext() && !match){
+				Item temp = i.next();
+				if(temp.getName() == name){
+					temp.quantity = quantity;
+					match = true;
+				}
+			}
+			if(match){
+				System.out.println("Item " + name + "'s quantity updated to " + quantity);
+			} else{
+				System.out.println("No items named " + name + " were found in the shopping cart.");
+			}
 		}
 		
 		// Print all contents of shoppingCart in alpha-numeric order.
 		public static void print (String[] transaction, ArrayList<Item> shoppingCart){
-			
+			Iterator<Item> i = shoppingCart.iterator();
+			float price;
+			float total = 0; // Total price of all items.
+			while(i.hasNext()){
+				Item temp = i.next();
+				price = temp.calculatePrice(); 
+				total += price;
+				System.out.println("Name: " + temp.getName() + "\tQuantity: " + temp.getQuantity()
+					+ "\tPrice (plus tax, S&H): $" + price);
+			}
+			System.out.println("Total charge for shopping cart: $");
 		}
 	}
 			  
