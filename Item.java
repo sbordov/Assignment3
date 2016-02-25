@@ -55,11 +55,13 @@ public class Item implements Comparable<Item>, Comparator<Item>
 				"\tWeight: " + weight);
 	}
 	
+	// Override compareTo to facilitate comparison of item names for searching an arraylist of items.
 	@Override
 	public int compareTo(Item item){
 	    return name.compareTo(item.getName());
 	}
 	
+	// Override compare to facilitate comparison of item names.
 	@Override
     public int compare(Item item1, Item item2) {
           return item1.getName().compareTo(item2.getName());

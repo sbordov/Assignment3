@@ -1,33 +1,10 @@
 package assignment3;
-/*************************************************************************************************
-IMPORTANT!^
-IMPORTANT!^
-IMPORTANT!^
-IMPORTANT!^
-IMPORTANT!^
-IMPORTANT!^
-IMPORTANT!^
-IMPORTANT!^
-IMPORTANT!^
-Don't forget to change package to Assignment3 or points will be deducted, would change it now but it can wait 
-*/
-
-
-
-
-
-
-
-
-
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
-
-
 
 public class A3Driver
 	{
@@ -48,7 +25,6 @@ public class A3Driver
 		return;
 	  }
 	  
-	  // I (Stefan) added everything below this line.((Edit)-Dan Coded the meat of the function reviewTransaction)
 		/******************************************************************************
 		* Method Name: processLinesInFile                                             *
 		* Purpose: Opens the file specified in String filename, reads each line in it *
@@ -72,19 +48,21 @@ public class A3Driver
 				{
 					boolean isValid = reviewTransaction(s); // Checks line of transaction for validity.
 					if(isValid){ // Adds a valid transaction to the transaction list to be performed.
-						transactions.add(s); // Adds valid transaction line to return string.
+						transactions.add(s); // Adds valid transaction line to arraylist.
 						i++; // Increment transactions index.
 					}
 				}
-				goodTransactions = new String[i];
+				goodTransactions = new String[i]; // String array to hold valid transactions.
 				Iterator<String> it = transactions.iterator();
 				int index = 0;
+				// Iterate through valid transactions added to ArrayList, adding all valid transactions
+				// to String array.
 				while(it.hasNext()){
 					String temp = it.next();
 					goodTransactions[index] = temp;
 					index += 1;
 				}
-				return goodTransactions;
+				return goodTransactions; // This input will be used for transaction processing.
 			} 
 			catch (FileNotFoundException e) 
 			{
@@ -186,6 +164,7 @@ public class A3Driver
 			Item item = new Item(name, price, quantity, weight);
 			ValidInput parsedArgs = new ValidInput();
 			parsedArgs.inputArgs = transaction;
+			
 			String category = parsedArgs.categoryCheck(transaction[1]);
 			switch (category){
 				case "clothing": 
@@ -289,6 +268,8 @@ public class A3Driver
 			System.out.println("Total charge for shopping cart: $" + formattedTotal);
 		}
 		
+		// Override binarySearch to return the index at which a new item should be inserted to
+		// maintain alpha order.
 		public static int binarySearch(ArrayList<Item> shoppingCart, Item item){
 			int low = 0;
 		    int high = shoppingCart.size() - 1;

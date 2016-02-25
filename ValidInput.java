@@ -1,10 +1,9 @@
 package assignment3;
 
 public class ValidInput{
-	//Dan Added this because
 	public String[] inputArgs;
 	
-	//Below is currently Stefan's Additions
+	// Check to see if input matches the given category.
 	public boolean checkInsert (String[] input){
 		String catCheck = categoryCheck(input[1]); 
 		boolean result = false;
@@ -24,6 +23,7 @@ public class ValidInput{
 		return result;
 	}
 	
+	// Check if a delete transaction has the proper number of input arguments.
 	public boolean checkDelete (String[] input){
 		if(input.length == 2){
 			return true;
@@ -33,6 +33,7 @@ public class ValidInput{
 		}
 	}
 	
+	// Check if a search transaction has the proper number of input args.
 	public boolean checkSearch (String[] input){
 		if(input.length == 2){
 			return true;
@@ -42,6 +43,7 @@ public class ValidInput{
 		}
 	}
 	
+	// Check if an update transaction has proper number of input args.
 	public boolean checkUpdate (String[] input){
 		if((input.length == 3) && isValidInt(input[2])){
 			return true;
@@ -52,6 +54,7 @@ public class ValidInput{
 			
 	}
 	
+	// Check if print transaction has proper number of input args.
 	public boolean checkPrint (String[] input){
 		if(input.length == 1){
 			return true;
@@ -61,6 +64,7 @@ public class ValidInput{
 		}
 	}
 	
+	// Ensure inputs from a clothing insert transaction will not create errors.
 	public boolean checkClothingInput (String[] input){
 		if(input.length != 6){
 			System.out.println("Inappropriate number of arguments for category type Clothing.");
@@ -81,6 +85,7 @@ public class ValidInput{
 		}
 	}
 	
+	// Ensure inputs from a groceries insert transaction will not create errors.
 	public boolean checkGroceriesInput (String[] input){
 		if(input.length != 7 ){
 			System.out.println("Inappropriate number of arguments for category type Groceries.");
@@ -103,6 +108,7 @@ public class ValidInput{
 		}
 	}
 	
+	// Ensure inputs from an electronics insert transaction will not create errors.
 	public boolean checkElectronicsInput (String[] input){
 		if(input.length != 8){
 			System.out.println("Inappropriate number of arguments for category type Electronics.");
@@ -125,6 +131,7 @@ public class ValidInput{
 		}
 	}
 	
+	// Check to see if input is a valid shoppingCart operation.
 	public  boolean isValidOp (String input){
 		if(input.equalsIgnoreCase("insert") || input.equalsIgnoreCase("delete") ||
 				input.equalsIgnoreCase("search") || input.equalsIgnoreCase("update") ||
@@ -135,6 +142,8 @@ public class ValidInput{
 		}
 	}
 	
+	// Ensure case insensitivity for operations by returning a standardized operation string if
+	// the transaction input is a case-insensitive match.
 	public String operationCheck (String input){
 		if(input.equalsIgnoreCase("insert")){ 
 			return "insert";
@@ -152,6 +161,8 @@ public class ValidInput{
 		}
 	}
 	
+	// Ensure case insensitivity for categories by returning a standardized category String if
+	// the transaction input is a case-insensitive match.
 	public String categoryCheck (String input){
 		if(input.equalsIgnoreCase("clothing")){
 			return "clothing";
@@ -165,6 +176,7 @@ public class ValidInput{
 		}
 	}
 	
+	// Validate category identification string.
 	public  boolean isValidCat (String input){
 		if(input.equalsIgnoreCase("clothing") || input.equalsIgnoreCase("electronics") ||
 				input.equalsIgnoreCase("groceries")){
@@ -174,6 +186,7 @@ public class ValidInput{
 		}
 	}
 	
+	// Validate input price.
 	public  boolean isValidPrice (String input){
 		int i = 0;
 		String character = input.substring(i, i + 1);
@@ -216,6 +229,7 @@ public class ValidInput{
 		}
 	}
 	
+	/* Didn't use.
 	public  boolean isValidWholeNum (String input){
 		int i = 0;
 		String character = input.substring(i, i + 1);
@@ -237,7 +251,9 @@ public class ValidInput{
 		}
 		return false; // If i != input.length(), there is at least one invalid character.
 	}
+	*/
 	
+	// Check a String to see if it is an integer (integers with trailing decimal zeros are still ints).
 	public  boolean isValidInt (String input){
 		int i = 0;
 		String character = input.substring(i, i + 1);
@@ -267,6 +283,8 @@ public class ValidInput{
 		}
 	}
 	
+	// Check optional input for groceries and electronics to see if it properly specifies fragility
+	// or perishability.
 	public  boolean isValidOp1 (String input, String category){
 		if(category.equalsIgnoreCase("groceries")){
 			if(input.equalsIgnoreCase("P") || input.equalsIgnoreCase("NP")){
@@ -285,6 +303,7 @@ public class ValidInput{
 		}
 	}
 	
+	// Check to see if additional input for electronics insert transaction is a valid state ID.
 	public  boolean isValidOp2 (String input, String category){
 		if(category.equalsIgnoreCase("electronics")){
 			if(isState(input)){
@@ -297,12 +316,14 @@ public class ValidInput{
 		}
 	}
 	
+	// List of all valid state abbreviations in the US.
 	private  String[] states = {"AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL",
 			"GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", 
 			"MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR",
 			"PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"
 	};
 	
+	// Returns true if the input string matches a U.S. state abbreviation.
 	public  boolean isState (String input){
 		boolean matchFound = false;
 		int i = 0;
