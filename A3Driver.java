@@ -142,7 +142,6 @@ public class A3Driver
 		*         								                                      *
 		* Returns: None                                                               *
 		******************************************************************************/
-		//Dan's Code is here 
 		public static void processTransactions (String[] transaction, ArrayList<Item> shoppingCart){
 			if(transaction.length == 0){
 				System.out.println("No transactions to perform.");
@@ -179,8 +178,10 @@ public class A3Driver
 		public static void insert (String[] transaction, ArrayList<Item> shoppingCart){
 			String name = transaction[2];
 			float price = Float.parseFloat(transaction[3]);
-			int quantity = Integer.parseInt(transaction[4]);
-			int weight = Integer.parseInt(transaction[5]);
+			double qty = Double.parseDouble(transaction[4]);
+			int quantity = (int) qty; // Handles conversions of input with trailing zeroes.
+			double wt = Double.parseDouble(transaction[5]);
+			int weight = (int) wt; // Handles conversions of input with trailing zeroes.
 			String op1; String op2;
 			Item item = new Item(name, price, quantity, weight);
 			ValidInput parsedArgs = new ValidInput();
@@ -209,21 +210,21 @@ public class A3Driver
 		// Delete all entries of given name.
 		public static void delete (String[] transaction, ArrayList<Item> shoppingCart){
 			String name = transaction[1];
-			int deletions = 0;
+			int deletedQuantity = 0;
 			Iterator<Item> i = shoppingCart.iterator();
 			while(i.hasNext()){ // Use iterator to go through shoppingCart.
 				Item temp = i.next(); // Check next item.
 				 // If the temp item name matches name, remove fr/ shoppingCart
 				if(temp.getName().equals(name)){
+					deletedQuantity += temp.getQuantity();
 					i.remove();
-					deletions += 1;
 				}
 			}
-			if(deletions == 0){
+			if(deletedQuantity == 0){
 				System.out.println("No items named " + name + " were found in the shopping cart.");
 			} else{
-				System.out.println("Deleted " + deletions + " occurence(s) of items named " + name
-						+ " from the shopping cart.");
+				System.out.println("Deleted " + deletedQuantity + " items named " 
+						+ name + " from the shopping cart.");
 			}
 				
 		}
@@ -231,19 +232,19 @@ public class A3Driver
 		// Find number of entries of given name. Outputs number of items of name to screen.
 		public static void search (String[] transaction, ArrayList<Item> shoppingCart){
 			String name = transaction[1];
-			int matches = 0;
+			int foundQuantity = 0;
 			Iterator<Item> i = shoppingCart.iterator();
 			while(i.hasNext()){ // Use iterator to go through shoppingCart.
 				Item temp = i.next(); // Check next item.
 				 // If the temp item name matches name, remove fr/ shoppingCart
 				if(temp.getName().equals(name)){
-					matches += 1;
+					foundQuantity += temp.getQuantity();
 				}
 			}
-			if(matches == 0){
+			if(foundQuantity == 0){
 				System.out.println("No items named " + name + " were found in the shopping cart.");
 			} else{
-				System.out.println("Found " + matches + " occurences of items named " + name
+				System.out.println("Found " + foundQuantity + " items named " + name
 						+ " in the shopping cart.");
 			}
 		}
@@ -252,7 +253,8 @@ public class A3Driver
 		// Prints the name and new quantity value to screen.
 		public static void update (String[] transaction, ArrayList<Item> shoppingCart){
 			String name = transaction[1];
-			int quantity = Integer.parseInt(transaction[2]);
+			double qty = Double.parseDouble(transaction[2]);
+			int quantity = (int) qty; // Handles conversions of input with trailing zeroes.
 			Iterator<Item> i = shoppingCart.iterator();
 			boolean match = false;
 			while(i.hasNext() && !match){
@@ -276,12 +278,15 @@ public class A3Driver
 			float total = 0; // Total price of all items.
 			while(i.hasNext()){
 				Item temp = i.next();
-				price = temp.calculatePrice(); 
+				price = temp.calculatePrice();
+				String formattedPrice = String.format("%.02f", price);
+				price = Float.parseFloat(formattedPrice); // Ensure price only ever has 2 decimals.
 				total += price;
 				System.out.println("Name: " + temp.getName() + "\tQuantity: " + temp.getQuantity()
-					+ "\tPrice (plus tax, S&H): $" + price);
+					+ "\tPrice (plus tax, S&H): $" + formattedPrice);
 			}
-			System.out.println("Total charge for shopping cart: $" + total);
+			String formattedTotal = String.format("%.02f", total);
+			System.out.println("Total charge for shopping cart: $" + formattedTotal);
 		}
 		
 		public static int binarySearch(ArrayList<Item> shoppingCart, Item item){

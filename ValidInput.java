@@ -176,6 +176,7 @@ public class ValidInput{
 		String character = input.substring(i, i + 1);
 		int punct = 0; // Count for number of occurrences of periods.
 		int digsAfterDecimal = 0; // Count for number of digits occurring after decimal.
+		int numTrailingZeroes = 0;
 		while(("0123456789.".indexOf(character) >= 0) && (i < input.length())){
 			character = input.substring(i, i + 1);
 			if(character.equals(".")){
@@ -184,7 +185,19 @@ public class ValidInput{
 				} else { return false; } // Multiple occurrences of punctuation is not okay.
 			} else{
 				if(punct == 1){
-					digsAfterDecimal += 1; // Counts number of digits occurring after a decimal.
+					if(digsAfterDecimal <= 2 && character.equals("0")){
+						while(character.equals("0") && (i < input.length() - 1)){
+							numTrailingZeroes += 1;
+							i++;
+							character = input.substring(i, i + 1);
+						}
+						if(!character.equals("0")){
+							digsAfterDecimal += numTrailingZeroes + 1;
+						}
+
+					} else{
+						digsAfterDecimal += 1; // Counts number of digits occurring after a decimal.
+					}
 				}
 			}
 			i++;
@@ -229,6 +242,20 @@ public class ValidInput{
 		while(("0123456789".indexOf(character) >= 0) && (i < input.length())){
 			character = input.substring(i, i + 1);
 			i++;
+		}
+		if(character.equals(".") && i >= input.length()){
+			return false;
+		} else if(character.equals(".") && (i < input.length())){
+			character = input.substring(i, i + 1);
+			while(character.equals("0") && (i < input.length() - 1)){
+				i++;
+				character = input.substring(i, i + 1);
+			}
+			if(!character.equals("0")){
+				return false; // There exists an integer beyond a punctuation mark that doesn't = 0.
+			} else{
+				return true;
+			}
 		}
 		if(i == input.length()){ // If all characters are valid ints, return true.
 			return true;
