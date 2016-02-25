@@ -63,6 +63,7 @@ public class ValidInput{
 	
 	public boolean checkClothingInput (String[] input){
 		if(input.length != 6){
+			System.out.println("Inappropriate number of arguments for category type Clothing.");
 			return false;
 		}
 		String price = input[3]; String quantity = input[4]; String weight = input[5];
@@ -82,6 +83,7 @@ public class ValidInput{
 	
 	public boolean checkGroceriesInput (String[] input){
 		if(input.length != 7 ){
+			System.out.println("Inappropriate number of arguments for category type Groceries.");
 			return false;
 		}
 		String category = input[1]; String price = input[3]; String quantity = input[4]; 
@@ -103,6 +105,7 @@ public class ValidInput{
 	
 	public boolean checkElectronicsInput (String[] input){
 		if(input.length != 8){
+			System.out.println("Inappropriate number of arguments for category type Electronics.");
 			return false;
 		}
 		String category = input[1]; String price = input[3]; String quantity = input[4]; 
